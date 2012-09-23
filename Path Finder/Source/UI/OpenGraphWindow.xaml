@@ -1,0 +1,15 @@
+﻿<Window x:Class="Path_Finder.Source.UI.OpenGraphWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Open Graph" Height="162" Width="503" Name="OpenraphWindow" Icon="/Path%20Finder;component/Images/OpenFileSmall.png" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" ShowInTaskbar="False">
+    <Grid>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="95,15,0,0" Name="textBoxLocations" VerticalAlignment="Top" Width="315" />
+        <Label Content="Locations:" Height="28" HorizontalAlignment="Left" Name="labelLocations" VerticalAlignment="Top" Width="65" Margin="12,12,0,0" />
+        <Label Content="Connections:" Height="28" HorizontalAlignment="Left" Margin="12,42,0,0" Name="labelConnections" VerticalAlignment="Top" Width="77" />
+        <Button Content="Browse" Height="23" HorizontalAlignment="Left" Margin="416,14,0,0" Name="buttonBrowseLocations" VerticalAlignment="Top" Width="53" Click="buttonBrowseLocations_Click" />
+        <Button Content="Cancel" Height="30" HorizontalAlignment="Left" Margin="379,81,0,0" Name="buttonCancel" VerticalAlignment="Top" Width="90" Click="buttonCancel_Click" />
+        <Button Content="Load" Height="30" HorizontalAlignment="Left" Margin="283,81,0,0" Name="buttonLoadGraph" VerticalAlignment="Top" Width="90" Click="buttonLoadGraph_Click" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="95,44,0,0" Name="textBoxConnections" VerticalAlignment="Top" Width="315" />
+        <Button Content="Browse" Height="23" HorizontalAlignment="Left" Margin="416,44,0,0" Name="buttonBrowseConnections" VerticalAlignment="Top" Width="53" Click="buttonBrowseConnections_Click" />
+    </Grid>
+</Window>

@@ -1,0 +1,532 @@
+﻿   
+<ribbon:RibbonWindow x:Class="Path_Finder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:graphsharp="clr-namespace:GraphSharp.Controls;assembly=GraphSharp.Controls"
+        xmlns:ribbon="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
+        xmlns:local="clr-namespace:Path_Finder.DataTypes"
+        xmlns:zoom="clr-namespace:WPFExtensions.Controls;assembly=WPFExtensions"
+        Title="Path Finder"
+		x:Name="RibbonWindow"
+		Width="1024" 
+        Height="768" 
+        IsEnabled="True" 
+        ResizeMode="CanResize" 
+        WindowState="Maximized" 
+        WindowStyle="SingleBorderWindow" 
+        Topmost="False" 
+        MinWidth="1024" 
+        MinHeight="768" 
+        Icon="/Path%20Finder;component/Images/PanelIcon.png" 
+        WindowStartupLocation="CenterScreen">
+
+    <!--Window resources: templates and styles-->
+    <Window.Resources>
+        <!--Template for the vertex-->
+        <DataTemplate x:Key="vertexTemplate" DataType="{x:Type local:VertexCity}">           
+            <StackPanel Orientation="Horizontal" 
+                        Margin="5"
+                        MouseLeave="StackPanel_MouseLeave">
+                
+                <Image x:Name="img" 
+                       Source="Images/CityGold.png" 
+                       Width="20" 
+                       Height="20" />
+                
+                <TextBlock Text="{Binding Path=City, Mode=OneWay}" />
+                                             
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold" Text="City information"/>
+                        <TextBlock>
+                            <TextBlock Text="Name: "></TextBlock>
+                            <TextBlock Text="{Binding City, Mode=OneWay}"></TextBlock>
+                        </TextBlock>
+                        <TextBlock Text="{Binding CityCoordinates, Mode=OneWay}"></TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
+                
+                <StackPanel.ContextMenu>
+                    <ContextMenu>                      
+                        <MenuItem x:Name="StartCityItem"  Header="Start City"
+                                  Click="StartCityItem_Click" />
+                        <MenuItem x:Name="FinalCityItem" Header="Final City"
+                                  Click="FinalCityItem_Click"/>
+                        <Separator></Separator>
+                        <MenuItem x:Name="DeleteItem" Header="Delete"
+                                  Click="DeleteItem_Click"/>
+                    </ContextMenu>
+                </StackPanel.ContextMenu>
+            </StackPanel>
+        </DataTemplate>
+
+        <!--General style for the vertex-->
+        <Style TargetType="{x:Type graphsharp:VertexControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}">
+                        <Border BorderBrush="Black"
+                                Background="Goldenrod"
+							    BorderThickness="2"
+							    CornerRadius="10,10,10,10"
+							    Padding="{TemplateBinding Padding}">
+
+                            <StackPanel Orientation="Vertical">
+                                <ContentPresenter Content="{TemplateBinding Vertex}" 
+                                                  ContentTemplate="{StaticResource vertexTemplate}" />
+                            </StackPanel>
+
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" 
+                                                  Color="Black" 
+                                                  Opacity="0.3" 
+                                                  Direction="315"/>
+                            </Border.Effect>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!--Vertex specific styles-->
+        <Style x:Key="DefaultCityStyle" TargetType="{x:Type graphsharp:VertexControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}">
+                        <Border BorderBrush="Black"
+                                Background="Goldenrod"
+							    BorderThickness="2"
+							    CornerRadius="10,10,10,10"
+							    Padding="{TemplateBinding Padding}">
+
+                            <StackPanel Orientation="Vertical">
+                                <ContentPresenter Content="{TemplateBinding Vertex}" 
+                                                  ContentTemplate="{StaticResource vertexTemplate}" />
+                            </StackPanel>
+
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" 
+                                                  Color="Black" 
+                                                  Opacity="0.3" 
+                                                  Direction="315"/>
+                            </Border.Effect>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="StartCityStyle" TargetType="{x:Type graphsharp:VertexControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}">
+                        <Border BorderBrush="Black"
+                                Background="Green"
+							    BorderThickness="2"
+							    CornerRadius="10,10,10,10"
+							    Padding="{TemplateBinding Padding}">
+
+                            <StackPanel Orientation="Vertical">
+                                <ContentPresenter Content="{TemplateBinding Vertex}" 
+                                                  ContentTemplate="{StaticResource vertexTemplate}" />
+                            </StackPanel>
+
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" 
+                                                  Color="Black" 
+                                                  Opacity="0.3" 
+                                                  Direction="315"/>
+                            </Border.Effect>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="FinalCityStyle" TargetType="{x:Type graphsharp:VertexControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}">
+                        <Border BorderBrush="Black"
+                                Background="Red"
+							    BorderThickness="2"
+							    CornerRadius="10,10,10,10"
+							    Padding="{TemplateBinding Padding}">
+
+                            <StackPanel Orientation="Vertical">
+                                <ContentPresenter Content="{TemplateBinding Vertex}" 
+                                                  ContentTemplate="{StaticResource vertexTemplate}" />
+                            </StackPanel>
+
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" 
+                                                  Color="Black" 
+                                                  Opacity="0.3" 
+                                                  Direction="315"/>
+                            </Border.Effect>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BestCityStyle" TargetType="{x:Type graphsharp:VertexControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}">
+                        <Border BorderBrush="Silver"
+                                Background="MidnightBlue"
+							    BorderThickness="2"
+							    CornerRadius="10,10,10,10"
+							    Padding="{TemplateBinding Padding}">
+
+                            <StackPanel Orientation="Vertical">
+                                <ContentPresenter Content="{TemplateBinding Vertex}" 
+                                                  ContentTemplate="{StaticResource vertexTemplate}" />
+                            </StackPanel>
+
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" 
+                                                  Color="Black" 
+                                                  Opacity="0.3" 
+                                                  Direction="315"/>
+                            </Border.Effect>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CheckedCityStyle" TargetType="{x:Type graphsharp:VertexControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}">
+                        <Border BorderBrush="LightSkyBlue"
+                                Background="AliceBlue"
+							    BorderThickness="2"
+							    CornerRadius="10,10,10,10"
+							    Padding="{TemplateBinding Padding}">
+
+                            <StackPanel Orientation="Vertical">
+                                <ContentPresenter Content="{TemplateBinding Vertex}" 
+                                                  ContentTemplate="{StaticResource vertexTemplate}" />
+                            </StackPanel>
+
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" 
+                                                  Color="Black" 
+                                                  Opacity="0.3" 
+                                                  Direction="315"/>
+                            </Border.Effect>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ExploredCityStyle" TargetType="{x:Type graphsharp:VertexControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}">
+                        <Border BorderBrush="Green"
+                                Background="Gold"
+							    BorderThickness="2"
+							    CornerRadius="10,10,10,10"
+							    Padding="{TemplateBinding Padding}">
+
+                            <StackPanel Orientation="Vertical">
+                                <ContentPresenter Content="{TemplateBinding Vertex}" 
+                                                  ContentTemplate="{StaticResource vertexTemplate}" />
+                            </StackPanel>
+
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" 
+                                                  Color="Black" 
+                                                  Opacity="0.3" 
+                                                  Direction="315"/>
+                            </Border.Effect>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="RejectedCityStyle" TargetType="{x:Type graphsharp:VertexControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}">
+                        <Border BorderBrush="Silver"
+                                Background="Red"
+							    BorderThickness="2"
+							    CornerRadius="10,10,10,10"
+							    Padding="{TemplateBinding Padding}">
+
+                            <StackPanel Orientation="Vertical">
+                                <ContentPresenter Content="{TemplateBinding Vertex}" 
+                                                  ContentTemplate="{StaticResource vertexTemplate}" />
+                            </StackPanel>
+
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" 
+                                                  Color="Black" 
+                                                  Opacity="0.3" 
+                                                  Direction="315"/>
+                            </Border.Effect>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="UpdatedCityStyle" TargetType="{x:Type graphsharp:VertexControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}">
+                        <Border BorderBrush="Silver"
+                                Background="DarkOrange"
+							    BorderThickness="2"
+							    CornerRadius="10,10,10,10"
+							    Padding="{TemplateBinding Padding}">
+
+                            <StackPanel Orientation="Vertical">
+                                <ContentPresenter Content="{TemplateBinding Vertex}" 
+                                                  ContentTemplate="{StaticResource vertexTemplate}" />
+                            </StackPanel>
+
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" 
+                                                  Color="Black" 
+                                                  Opacity="0.3" 
+                                                  Direction="315"/>
+                            </Border.Effect>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="AddedCityStyle" TargetType="{x:Type graphsharp:VertexControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}">
+                        <Border BorderBrush="Silver"
+                                Background="ForestGreen"
+							    BorderThickness="2"
+							    CornerRadius="10,10,10,10"
+							    Padding="{TemplateBinding Padding}">
+
+                            <StackPanel Orientation="Vertical">
+                                <ContentPresenter Content="{TemplateBinding Vertex}" 
+                                                  ContentTemplate="{StaticResource vertexTemplate}" />
+                            </StackPanel>
+
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" 
+                                                  Color="Black" 
+                                                  Opacity="0.3" 
+                                                  Direction="315"/>
+                            </Border.Effect>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PathCityStyle" TargetType="{x:Type graphsharp:VertexControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}">
+                        <Border BorderBrush="Black"
+                                Background="RoyalBlue"
+							    BorderThickness="2"
+							    CornerRadius="10,10,10,10"
+							    Padding="{TemplateBinding Padding}">
+
+                            <StackPanel Orientation="Vertical">
+                                <ContentPresenter Content="{TemplateBinding Vertex}" 
+                                                  ContentTemplate="{StaticResource vertexTemplate}" />
+                            </StackPanel>
+
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" 
+                                                  Color="Black" 
+                                                  Opacity="0.3" 
+                                                  Direction="315"/>
+                            </Border.Effect>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="FoundCityStyle" TargetType="{x:Type graphsharp:VertexControl}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type graphsharp:VertexControl}">
+                        <Border BorderBrush="Silver"
+                                Background="Gold"
+							    BorderThickness="2"
+							    CornerRadius="10,10,10,10"
+							    Padding="{TemplateBinding Padding}">
+
+                            <StackPanel Orientation="Vertical">
+                                <ContentPresenter Content="{TemplateBinding Vertex}" 
+                                                  ContentTemplate="{StaticResource vertexTemplate}" />
+                            </StackPanel>
+
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" 
+                                                  Color="Black" 
+                                                  Opacity="0.3" 
+                                                  Direction="315"/>
+                            </Border.Effect>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--General style for an edge-->
+        <Style TargetType="{x:Type graphsharp:EdgeControl}">
+            <EventSetter Event="MouseLeave"
+                         Handler="EdgeControl_MouseLeave">                
+            </EventSetter>
+        </Style>
+
+    </Window.Resources>
+    
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--Ribbon panel on top-->
+        <ribbon:Ribbon x:Name="Ribbon">
+            <ribbon:Ribbon.ApplicationMenu>
+                <ribbon:RibbonApplicationMenu Visibility="Collapsed">
+                </ribbon:RibbonApplicationMenu>
+            </ribbon:Ribbon.ApplicationMenu>
+            <ribbon:RibbonTab x:Name="HomeTab" 
+                              Header="Home">
+                <ribbon:RibbonGroup x:Name="GroupFile" 
+                                    Header="File" FlowDirection="LeftToRight" HorizontalContentAlignment="Left">
+                    <ribbon:RibbonButton x:Name="ButtonOpen"
+                                         LargeImageSource="Images\OpenSmall.png"
+                                         Label="Open" Click="ButtonOpen_Click" ToolTip="Open a graph" />
+                </ribbon:RibbonGroup>
+                
+                <ribbon:RibbonGroup x:Name="GroupGraph" 
+                                    Header="Graph">
+                    <ribbon:RibbonButton x:Name="ButtonReset"
+                                         LargeImageSource="Images\Refresh.png"
+                                         Label="Reset" Click="ButtonReset_Click" ToolTip="Reset the coordinates to the default" />
+                    <ribbon:RibbonButton x:Name="ButtonDefault"
+                                         LargeImageSource="Images\BackBlue.png"
+                                         Label="Default" Click="ButtonBack_Click" ToolTip="Reset the graph to default" />
+                    <ribbon:RibbonButton x:Name="ButtonClean"
+                                         LargeImageSource="Images\Clean.png"
+                                         Label="Clean" Click="ButtonClean_Click" ToolTip="Clean the graph" />
+                </ribbon:RibbonGroup>
+
+                <ribbon:RibbonGroup x:Name="GroupFindPath" 
+                                    Header="Find Path">
+                    <ribbon:RibbonButton x:Name="ButtonStart"
+                                         LargeImageSource="Images\StartGreen.png"
+                                         Label="Start" Click="ButtonStart_Click" ToolTip="Start A-star algorithm" />
+                    
+                    <ribbon:RibbonButton x:Name="ButtonStop"
+                                         LargeImageSource="Images\Stop.png"
+                                         Label="Stop" Click="ButtonStop_Click" ToolTip="Stop A-star algorithm" />
+                </ribbon:RibbonGroup>
+                
+                <ribbon:RibbonGroup x:Name="GroupSpeed"
+                                    Header="Speed">                   
+                    <ribbon:RibbonRadioButton x:Name="RadioButtonStep"
+                                               IsChecked="False" 
+                                               LargeImageSource="Images/SpeedStepByStep.png"
+                                               Label="Steps" Checked="ButtonStep_Checked" ToolTip="Step-by-step execution of algorithm">
+
+                    </ribbon:RibbonRadioButton>
+
+                    <ribbon:RibbonRadioButton x:Name="RadioButtonNormal"
+                                               IsChecked="False" 
+                                               LargeImageSource="Images/SpeedNormal.png"
+                                               Label="Slow" Checked="ButtonNormal_Checked" ToolTip="Slow execution of algorithm">
+
+                    </ribbon:RibbonRadioButton>
+
+                    <ribbon:RibbonRadioButton x:Name="RadioButtonFast"
+                                               IsChecked="True" 
+                                               LargeImageSource="Images/SpeedFast.png"
+                                               Label="Fast" Checked="ButtonFast_Checked" ToolTip="Fast execution of algorithm">
+
+                    </ribbon:RibbonRadioButton>
+                </ribbon:RibbonGroup>
+
+                <ribbon:RibbonGroup x:Name="GroupHeuristic" 
+                                    Header="Heuristic">
+                    <ribbon:RibbonRadioButton x:Name="RadioButtonDistance"
+                                              Label="Shortest Distance" 
+                                              LargeImageSource="Images/BallGrey.png"
+                                              IsChecked="True" Checked="RadioButtonDistance_Checked" ToolTip="Use the shortest distance heuristic" />
+                    
+                    <ribbon:RibbonRadioButton x:Name="RadioButtonHops"
+                                              Label="Minimum Hops"
+                                              LargeImageSource="Images/BallGrey.png" Checked="RadioButtonHops_Checked" ToolTip="Use the minimum hops heuristic" />
+                </ribbon:RibbonGroup>
+
+                <ribbon:RibbonGroup x:Name="GroupMisc" 
+                                    Header="Miscellaneous">
+                    <ribbon:RibbonButton x:Name="ButtonHelp"
+                                         LargeImageSource="Images\HelpHeadphones.png"
+                                         Label="Help" Click="ButtonHelp_Click" ToolTip="Open help" />
+                    <ribbon:RibbonButton x:Name="ButtonExit"
+                                         LargeImageSource="Images\ExitCircle.png"
+                                         Label="Exit" Click="ButtonExit_Click" ToolTip="Close the application" />
+                </ribbon:RibbonGroup>
+
+            </ribbon:RibbonTab>
+        </ribbon:Ribbon>
+        
+        <!--Zoom control with the graph layour inside it-->
+        <zoom:ZoomControl x:Name="zoomControl" 
+                          Margin="284,6,-8,0" 
+                          Grid.Row="1">
+            
+            <local:GraphLayoutCity x:Name="graphLayout" 
+                                   Graph="{Binding Path=GraphToVisualize}"                                    
+                                   HighlightAlgorithmType="Simple" 
+                                   Margin="276,6,0,0" 
+                                   Grid.Row="1" 
+                                   MouseLeave="graphLayout_MouseLeave"
+                                   MouseEnter="graphLayout_MouseEnter">                                 
+            </local:GraphLayoutCity>
+        </zoom:ZoomControl>
+        
+        <!--Text box to print log to-->
+        <TextBox Grid.Row="1"
+                     Height="552" 
+                     HorizontalAlignment="Left" 
+                     Name="richTextBoxLog"
+                     VerticalAlignment="Top"
+                     Width="258"
+                     Margin="12,40,0,0" 
+                     IsReadOnly="True" 
+                     IsUndoEnabled="False" 
+                     BorderThickness="1" 
+                     BorderBrush="{StaticResource {x:Static SystemColors.InactiveCaptionBrushKey}}" VerticalScrollBarVisibility="Visible">
+
+
+        </TextBox>
+        
+        <Label Content="A-star Algorithm Log:" 
+               Grid.Row="1" 
+               Height="28" 
+               HorizontalAlignment="Left"
+               Margin="12,6,0,0"
+               Name="labelLog" 
+               VerticalAlignment="Top" 
+               Width="258" />
+    </Grid>
+</ribbon:RibbonWindow>

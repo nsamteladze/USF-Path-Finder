@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3D94A8CD-6462-46AA-BE9C-6752AA8E192E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Path_Finder</RootNamespace>
+    <AssemblyName>Path Finder</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GraphSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dlls\GraphSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="GraphSharp.Controls, Version=1.0.4456.2272, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dlls\GraphSharp.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="QuickGraph, Version=3.2.40122.0, Culture=neutral, PublicKeyToken=f3fb40175eec2af3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dlls\QuickGraph.dll</HintPath>
+    </Reference>
+    <Reference Include="RibbonControlsLibrary, Version=4.0.0.11019, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dlls\RibbonControlsLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Microsoft.Windows.Shell" />
+    <Reference Include="WPFExtensions, Version=1.0.3437.34043, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dlls\WPFExtensions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Source\Algorithms\Algorithm.AStarAlg.cs" />
+    <Compile Include="Source\Algorithms\Algorithm.General.cs" />
+    <Compile Include="Source\Algorithms\Algorithm.Thread.cs" />
+    <Compile Include="Source\Data Types\DataTypes.cs" />
+    <Compile Include="Source\Managers\FileManager.cs" />
+    <Compile Include="Source\Managers\GraphManager.General.cs" />
+    <Compile Include="Source\Managers\GraphManager.Highlighting.cs" />
+    <Compile Include="Source\Managers\LogicManager.cs" />
+    <Compile Include="Source\Managers\LogManager.cs" />
+    <Compile Include="Source\UI\OpenGraphWindow.xaml.cs">
+      <DependentUpon>OpenGraphWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Source\UI\OpenGraphWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LargeIcon.png" />
+    <Resource Include="Images\SmallIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\city.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\open1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\OpenSmall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\HelpBlue.png" />
+    <Resource Include="Images\HelpGreen.png" />
+    <Resource Include="Images\HelpHeadphones.png" />
+    <Resource Include="Images\Refresh.png" />
+    <Resource Include="Images\StartBlue.png" />
+    <Resource Include="Images\StartGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\BackBlue.png" />
+    <Resource Include="Images\BackGreen.png" />
+    <Resource Include="Images\OpenBlue.png" />
+    <Resource Include="Images\OpenBlue2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ExitCircle.png" />
+    <Resource Include="Images\ExitCross.png" />
+    <Resource Include="Images\ExitRectangle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SpeedFast.png" />
+    <Resource Include="Images\SpeedNormal.png" />
+    <Resource Include="Images\SpeedStepByStep.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\OpenFileSmall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Application.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\BallBlue.png" />
+    <Resource Include="Images\BallBlue2.png" />
+    <Resource Include="Images\BallGreen.png" />
+    <Resource Include="Images\BallGrey.png" />
+    <Resource Include="Images\BallOrange.jpg" />
+    <Resource Include="Images\BallOrange.png" />
+    <Resource Include="Images\BallRed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\PanelIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MainWindowIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\CityGold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Clean.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
